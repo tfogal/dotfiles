@@ -1,0 +1,60 @@
+# source bashrc if it exists, but only if our pythonpath is empty.  the logic
+# is that bashrc should source my env_additions, which will set pythonpath, and
+# so we don't want to double-source bashrc.
+#if test -z "$PYTHONPATH" -a -f ~/.bashrc ; then
+# Nevermind, seems to skip it in too many cases.
+if test -f ~/.bashrc ; then
+    . ~/.bashrc
+fi
+
+# Prompt that isn't crap.
+PS1='\[\033[01;32m\]\u\[\033[00;00m\]@\[\033[00;35m\]\h\[\033[01;34m\] \W \[\033[00m\]'
+
+# editing mode that everyone else hates
+set -o vi
+
+export PARINIT="rT8bg1qR B=.?_A_a Q=_s>| w71"
+
+# other aliases
+alias ls='ls -G'
+alias lynx='lynx -nopause -cookies'
+alias fuck='killall -9'
+alias grep='grep --color=tty -d skip'
+alias egrep='egrep --color=tty -d skip'
+alias fgrep='fgrep --color=tty -d skip'
+alias g='git'
+alias mk='make'
+function gitupdate {
+  if test -n "$1"; then
+    (cd ${1} && git checkout master && git svn rebase && \
+     git rebase master private)
+  else
+    (git checkout master && git svn rebase && git rebase master private)
+  fi
+}
+alias gb='go build'
+export PAGER=less
+export BIBINPUTS="${HOME}/dev/bibtex:."
+export GCC_COLORS="auto"
+
+if test x`uname` = "xDarwin" ; then
+  export PATH=$PATH:/opt/local/bin:/opt/local/sbin
+  alias screen='export SCREENPWD=$(pwd); ${HOME}/sw/bin/screen'
+  unalias ls
+  alias ls='ls -G'
+fi
+sp() {
+  if test -z "$1"; then
+    screen
+  elif test -f "${HOME}/.screen/$1" ; then
+    screen -S $1 -c "${HOME}/.screen/$1"
+  else
+    echo "unknown screen profile '$1'."
+  fi
+}
+function gdoc() { godoc $1 | less; }
+#unset DISPLAY
+export PATH="${HOME}/sw/bin:${PATH}"
+fortune
+set bell-style visible
+set prefer-visible-bell
