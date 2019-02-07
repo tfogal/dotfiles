@@ -1,0 +1,31 @@
+color normal brown
+color idle yellow
+color bottom white
+color comment green
+color string bright white
+color char white
+color regexp like char
+color regsup like string
+color number yellow
+color keyword red
+color function white
+color variable cyan
+color prep magenta
+color prepquote light magenta
+color doc light green
+color kind0 yellow
+
+color bold underlined white
+color italic bright red
+color fixed bright magenta
+color emphasized magenta
+
+set tabstop=2
+set shiftwidth=2
+set inputtab=tab
+set nosmarttab
+set textwidth=80
+map q {=}
+set equalprg="par w71"
+set tagprg="global -t $1"
+set flash
